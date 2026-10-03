@@ -163,9 +163,12 @@ void loop() {
   if (deviceConnected && millis() - lastSend >= SEND_INTERVAL_MS) {
     lastSend = millis();
 
-    float value = readSensor();
-    char buf[16];
-    snprintf(buf, sizeof(buf), "%.5f", value);   // send as readable text
+    float value = readSensor(); // 0.699151576
+    char buf[24];
+    // %.9g = 9 significant digits: the full precision of a 32-bit float,
+    // with no padding zeros and no wasted characters. The receiver decides
+    // how many digits to display.
+    snprintf(buf, sizeof(buf), "%.9g", value);
 
     pCharacteristic->setValue((uint8_t *)buf, strlen(buf));
     pCharacteristic->notify();
