@@ -73,7 +73,6 @@ void initSensor() {
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial) { delay(10); }
 
   initSensor();
 
@@ -107,7 +106,7 @@ void loop() {
 
     float value = readSensor();
     char buf[16];
-    snprintf(buf, sizeof(buf), "%.2f", value);   // send as readable text
+    snprintf(buf, sizeof(buf), "%.5f", value);   // send as readable text
 
     pCharacteristic->setValue((uint8_t *)buf, strlen(buf));
     pCharacteristic->notify();
